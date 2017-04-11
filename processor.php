@@ -4,6 +4,21 @@ include 'coder.php';
 include 'db.php';
 
 if (isset($_GET['go'])) {
+	$url = parse_url($_GET['go']);
+	if ($url['host'] == 'proj8.ru'){
+		echo 'Введите корректный URL';
+		die;
+	}
+	
+	if (!filter_var($_GET['go'], FILTER_VALIDATE_URL)) {
+		echo 'Введите корректный URL';
+		die;
+	}
+	
+	if (!($stat = @get_headers($_GET['go']))){
+		echo 'такого адреса не существует';
+		die;
+	} 
 	
 	if (isset($_GET['desire']) && strlen($_GET['desire']) > 0) {
 		$des = $_GET['desire'];
