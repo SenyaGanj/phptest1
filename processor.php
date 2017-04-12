@@ -1,8 +1,5 @@
 <?php
 
-include 'coder.php';
-include 'db.php';
-
 if (isset($_GET['go'])) {
 	$url = parse_url($_GET['go']);
 	if ($url['host'] == 'proj8.ru'){
@@ -19,6 +16,9 @@ if (isset($_GET['go'])) {
 		echo 'такого адреса не существует';
 		die;
 	} 
+	
+	include 'coder.php';
+	include 'db.php';
 	
 	if (isset($_GET['desire']) && strlen($_GET['desire']) > 0) {
 		$des = $_GET['desire'];
@@ -52,6 +52,7 @@ if (isset($_GET['go'])) {
 				
 				if(mysql_num_rows($r) > 0) {
 					$r = mysql_query("INSERT INTO url (URL, processed, flag) VALUES ('', '', 0)");
+					$r = mysql_query("DELETE FROM url WHERE id = $count");
 				} else {
 					break;
 				}
@@ -63,4 +64,5 @@ if (isset($_GET['go'])) {
 			echo 'http://proj8.ru/'.$arr[2];
 		}
 	}
+	mysql_close($link);
 }

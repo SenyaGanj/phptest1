@@ -11,9 +11,9 @@ if (isset ($_GET['link'])) {
 	
 	if(mysql_num_rows($r)) {	
 		$arr = mysql_fetch_array($r);
+		mysql_close($link);
 		header("location: $arr[1]");
-		exit;
-		die;		
+		exit;		
 	}	
 }
 
