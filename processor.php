@@ -43,16 +43,17 @@ if (isset($_GET['go'])) {
 			$arr = mysql_fetch_array($r);
 			echo 'http://proj8.ru/'.$arr[2];	
         } else {
+			$c = mysql_query("SELECT MAX(id) FROM url");
+			$carr = mysql_fetch_array($c);
+			$count = 1 + $carr[0];
 			while (1) {
-				$c = mysql_query("SELECT COUNT(1) FROM url");
-				$carr = mysql_fetch_array($c);
-				$count = 1 + $carr[0];
 				$code = coder($count);
 				$r = mysql_query("SELECT * FROM url WHERE processed = '$code'");
 				
 				if(mysql_num_rows($r) > 0) {
 					$r = mysql_query("INSERT INTO url (URL, processed, flag) VALUES ('', '', 0)");
 					$r = mysql_query("DELETE FROM url WHERE id = $count");
+					$count++;
 				} else {
 					break;
 				}
